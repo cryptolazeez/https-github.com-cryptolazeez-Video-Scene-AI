@@ -6,8 +6,20 @@ CineScript AI leverages advanced neural processing to unlock the narrative layer
 
 ---
 
-## 🚀 Vision
-In the era of Generative AI, the bridge between existing media and new creative prompts is vital. CineScript AI serves as that bridge, providing professional-grade tools to deconstruct video and audio into high-fidelity textual and conceptual components.
+## 🚀 Deployment
+
+### Deploy to Render
+1. Create a new **Web Service** on [Render](https://render.com).
+2. Connect your repository.
+3. Use the following settings:
+   - **Environment:** `Node`
+   - **Build Command:** `npm install && npm run build`
+   - **Start Command:** `npm start`
+4. Add the following **Environment Variables**:
+   - `GEMINI_API_KEY`: Your API key from [Google AI Studio](https://aistudio.google.com).
+   - `NODE_ENV`: `production`
+
+Alternatively, use the `render.yaml` file in this repository by selecting the "Blueprint" option on Render.
 
 ---
 

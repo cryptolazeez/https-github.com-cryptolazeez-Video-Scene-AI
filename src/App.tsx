@@ -22,8 +22,9 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 
 // Initialize Gemini AI
-const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
+// Initialize states
 export default function App() {
   const [showApp, setShowApp] = useState(false);
   const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -139,21 +140,19 @@ export default function App() {
         - **Translation:** ...
       `;
 
-      const response = await genAI.models.generateContent({
-        model: model,
-        contents: [
-          {
-            parts: [
-              { text: prompt },
-              {
-                inlineData: {
-                  mimeType: videoFile.type || (isAudio ? 'audio/mp3' : 'video/mp4'),
-                  data: base64Media,
-                },
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: {
+          parts: [
+            { text: prompt },
+            {
+              inlineData: {
+                mimeType: videoFile.type || (isAudio ? 'audio/mp3' : 'video/mp4'),
+                data: base64Media,
               },
-            ],
-          },
-        ],
+            },
+          ],
+        },
       });
 
       const text = response.text;
