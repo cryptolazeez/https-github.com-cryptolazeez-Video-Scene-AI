@@ -21,12 +21,10 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-// Initialize Gemini AI
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
-
 // Initialize states
 export default function App() {
   const [showApp, setShowApp] = useState(false);
+  const [apiKey, setApiKey] = useState('');
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
   const [audioPreview, setAudioPreview] = useState<string | null>(null);
@@ -98,6 +96,11 @@ export default function App() {
       return;
     }
 
+    if (!apiKey) {
+      setError("Please provide a Gemini API Key in the settings below to proceed.");
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
     setResult(null);
@@ -106,11 +109,13 @@ export default function App() {
       const base64Media = await fileToBase64(videoFile);
       const isAudio = videoFile.type.startsWith('audio/');
       
-      const model = "gemini-3-flash-preview";
+      // Initialize Gemini AI with user key
+      const ai = new GoogleGenAI({ apiKey: apiKey });
+
       const prompt = isAudio ? `
         Listen to this audio carefully. 
         1. Provide a full transcription in ${language}.
-        2. Provide a summary of the audio content.
+        2. Provide a 3-sentence summary of the content in ${language}.
         3. Provide a natural translation of the summary into ${translationLanguage}.
         
         Format as Markdown:
@@ -156,6 +161,7 @@ export default function App() {
       });
 
       const text = response.text;
+      
       if (text) {
         setResult(text);
       } else {
@@ -514,6 +520,20 @@ export default function App() {
                 <h2 className="text-xs font-mono text-zinc-400 uppercase tracking-[0.2em] mb-1">Intelligence Mapping</h2>
               </div>
               <div className="space-y-6 glass-card p-8 rounded-[2rem] border border-white/5">
+                <div className="space-y-3">
+                  <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest flex items-center justify-between">
+                    <span>Gemini API Key</span>
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-emerald-500 hover:underline">Get Key</a>
+                  </label>
+                  <input 
+                    type="password"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="Enter your API Key..."
+                    className="w-full bg-zinc-900/50 border border-white/5 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500/50 transition-all font-mono"
+                  />
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-3">
                     <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Base Dialect</label>

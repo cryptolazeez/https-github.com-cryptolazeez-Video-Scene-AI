@@ -15,9 +15,7 @@ CineScript AI leverages advanced neural processing to unlock the narrative layer
    - **Environment:** `Node`
    - **Build Command:** `npm install && npm run build`
    - **Start Command:** `npm start`
-4. Add the following **Environment Variables**:
-   - `GEMINI_API_KEY`: Your API key from [Google AI Studio](https://aistudio.google.com).
-   - `NODE_ENV`: `production`
+4. **No Environment Variables Required:** Users will provide their own Gemini API key directly in the application interface.
 
 Alternatively, use the `render.yaml` file in this repository by selecting the "Blueprint" option on Render.
 
