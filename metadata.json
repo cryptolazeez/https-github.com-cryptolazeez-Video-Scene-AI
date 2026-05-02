@@ -1,5 +1,5 @@
 {
-  "name": "Video Scene AI",
-  "description": "AI-powered video transcription and scene-by-scene image prompt generator.",
+  "name": "CineScript AI",
+  "description": "Enterprise-grade AI suite for cinematic transcription, scene analysis, and multimodal prompt engineering for DALL-E, Midjourney, SORA, and Runway.",
   "requestFramePermissions": []
 }
