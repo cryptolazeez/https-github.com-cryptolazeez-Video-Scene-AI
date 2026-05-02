@@ -1,0 +1,5 @@
+{
+  "name": "Video Scene AI",
+  "description": "AI-powered video transcription and scene-by-scene image prompt generator.",
+  "requestFramePermissions": []
+}
